@@ -113,11 +113,11 @@
 
  function SetChannel1(){
   var val = document.getElementById("channel1").value;
-  csound.SetChannel("channel1", val); 
+  csound.SetChannel("slider1", val); 
  }
   function SetChannel2(){
   var val = document.getElementById("channel2").value;
-  csound.SetChannel("channel2", val); 
+  csound.SetChannel("sliderl2", val); 
  }
 
 
@@ -155,10 +155,10 @@ endin
   </p>
  <p>
   <input type="range" name="channel1" id="channel1" step="1" value="50"
-  min="0" max="100"> channel1 </p>
+  min="0" max="100"> slider1 </p>
   <p>
     <input type="range" name="channel2" id="channel2" step="1" value="50"
-  min="0" max="100"> channel2 </p>
+  min="0" max="100"> slider2 </p>
   <p>
   <textarea class="console" cols="80" rows="25" id="console"
   value="">Csound: not loaded</textarea>
