@@ -16,22 +16,63 @@
  function moduleDidLoad() {
   csound.Play();
   csound.CompileOrc(
-  "schedule 1,0,-1 \n" +
   "instr 1 \n" +
   "kfr chnget \"freq\" \n" +
-  "a1 oscili 0.5,kfr \n" +
-   "outs a1,a1 \n"  +
+  "kcf chnget \"fil\" \n" +
+  "a1 vco2 0.1,kfr+cpspch(p4) \n" +
+  "a2 moogvcf a1,kcf,0.7 \n" + 
+   "outs a2,a2 \n"  +
   "endin");
   SetFreq();
+  SetFil();
  }
  function attachListeners() {
    document.getElementById("freq").
        addEventListener("mousemove",SetFreq);
+   document.getElementById("fil").
+       addEventListener("mousemove",SetFil);
+     document.getElementById("noteC").
+       addEventListener("click",NoteC);
+        document.getElementById("noteD").
+       addEventListener("click",NoteD);
+     document.getElementById("noteE").
+       addEventListener("click",NoteE);
+     document.getElementById("noteG").
+       addEventListener("click",NoteG);
+     document.getElementById("noteA").
+       addEventListener("click",NoteA);
  }
+
  function SetFreq(){
   var val = document.getElementById("freq").value;
   csound.SetChannel("freq", val); 
  }
+
+ function SetFil(){
+  var val = document.getElementById("fil").value;
+  csound.SetChannel("fil", val); 
+ }
+
+ function NoteC(){
+  csound.Event("i 1 0 1 8.00");
+}
+
+ function NoteD(){
+  csound.Event("i 1 0 1 8.02");
+}
+
+ function NoteE(){
+  csound.Event("i 1 0 1 8.04");
+}
+
+ function NoteG(){
+  csound.Event("i 1 0 1 8.07");
+}
+
+ function NoteA(){
+  csound.Event("i 1 0 1 8.09");
+}
+
 
  var count = 0;
     function handleMessage(message) {
@@ -53,6 +94,15 @@
   <input type="range" name="frequency" id="freq" step="1" value="50"
   min="440" max="880"> fundamental </p>
   <p>
+  <input type="range" name="filter" id="fil" step="1" value="1000"
+  min="880" max="6000"> filter </p>
+<p>
+<button type="button" id="noteC" >C</button>
+<button type="button" id="noteD" >D</button>
+<button type="button" id="noteE" >E</button>
+<button type="button" id="noteG" >G</button>
+<button type="button" id="noteA" >A</button>
+</p>
   <textarea class="console" cols="55" rows="16" id="console"
   value="">Csound: not loaded</textarea>
   <!--pNaCl csound module-->
