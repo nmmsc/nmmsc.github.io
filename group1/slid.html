@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<!--
+ Csound pnacl sliders example
+ Copyright (C) 2013 V Lazzarini
+-->
+<head>
+ <title>Slider Example</title>
+ <style type="text/css">
+   textarea.console { font-family: "Courier New"; color: #FCF477;
+                     background-color: #000077 }
+  </style>
+ <script type="text/javascript" src="csound.js"></script>
+ <script type="text/javascript">
+ // called by csound.js
+ function moduleDidLoad() {
+  csound.Play();
+  csound.CompileOrc(
+  "schedule 1,0,-1 \n" +
+  "instr 1 \n" +
+  "kfr chnget \"freq\" \n" +
+  "a1 oscili 0.5,kfr \n" +
+   "outs a1,a1 \n"  +
+  "endin");
+  SetFreq();
+ }
+ function attachListeners() {
+   document.getElementById("freq").
+       addEventListener("mousemove",SetFreq);
+ }
+ function SetFreq(){
+  var val = document.getElementById("freq").value;
+  csound.SetChannel("freq", val); 
+ }
+
+ var count = 0;
+    function handleMessage(message) {
+        var element = document.getElementById('console');
+        element.value += message.data;
+        element.scrollTop = 99999; // focus on bottom
+        count += 1;
+        if(count == 1000) {
+           element.value = ' ';
+           count = 0;
+        }
+  }
+
+ </script>
+</head>
+<body>
+   
+  <p>
+  <input type="range" name="frequency" id="freq" step="1" value="50"
+  min="440" max="880"> fundamental </p>
+  <p>
+  <textarea class="console" cols="55" rows="16" id="console"
+  value="">Csound: not loaded</textarea>
+  <!--pNaCl csound module-->
+  <div id="engine"></div>
+</body>
+</html>
+
